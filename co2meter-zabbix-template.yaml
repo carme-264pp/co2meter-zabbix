@@ -1,0 +1,79 @@
+zabbix_export:
+  version: '6.0'
+  date: '2022-12-10T06:28:08Z'
+  groups:
+    -
+      uuid: a571c0d144b14fd4a87a9d9b2aa9fcd6
+      name: Templates/Applications
+  templates:
+    -
+      uuid: 313903a614f84b05ba9899b2559f423c
+      template: co2-mini
+      name: co2-mini
+      groups:
+        -
+          name: Templates/Applications
+      items:
+        -
+          uuid: b93332d138d54810816dd00035ebee30
+          name: CO2
+          type: TRAP
+          key: co2mini.co2
+          delay: '0'
+          units: '!ppm'
+          tags:
+            -
+              tag: Application
+              value: CO2
+            -
+              tag: Application
+              value: Meter
+          triggers:
+            -
+              uuid: 9a464abde4b3497fb551086a372a46da
+              expression: last(/co2-mini/co2mini.co2)>1500
+              name: 'High CO2 ppm'
+              priority: HIGH
+            -
+              uuid: f28b7677777f485bbbdf0d8d6538f024
+              expression: last(/co2-mini/co2mini.co2)>1000
+              name: 'Warn CO2 ppm'
+              priority: WARNING
+        -
+          uuid: de501dc463f04fb2a4f3b575cbb3b3d1
+          name: Temperature
+          type: TRAP
+          key: co2mini.temperature
+          delay: '0'
+          value_type: FLOAT
+          units: ℃
+          tags:
+            -
+              tag: Application
+              value: Meter
+            -
+              tag: Application
+              value: Temp
+  graphs:
+    -
+      uuid: fddd7fb9a21144388a4d309d0b3ee52d
+      name: 'CO2 Meter'
+      graph_items:
+        -
+          sortorder: '1'
+          color: 199C0D
+          calc_fnc: ALL
+          item:
+            host: co2-mini
+            key: co2mini.co2
+    -
+      uuid: 1f55deaac79b4ab6a68c3ab52e1c5f65
+      name: Temperature
+      graph_items:
+        -
+          sortorder: '1'
+          color: 199C0D
+          calc_fnc: ALL
+          item:
+            host: co2-mini
+            key: co2mini.temperature
