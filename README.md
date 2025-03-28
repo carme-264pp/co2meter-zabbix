@@ -6,28 +6,33 @@ This scripts supports Python 3.x.
 
 ### Install Python modules
 
-1. Install CO2Meter Python module
+1. Create venv
 
     Install CO2Meter with pip:
-    ```bash
-    $ sudo pip install git+https://github.com/heinemml/CO2Meter
+    ```shell
+    $ python3 -m venv lib
+    $ source ./lib/bin/activate
     ```
 
-1. Install PyZabbix
+1. Install Python library
 
-    Install PyZabbix with pip:
-    ```bash
-    $ sudo pip install pyzabbix
+    ```shell
+    $ pip3 install -r requirements.txt
     ```
-### Zabbix watching
+### Install CO2-Zabbix 
 
-1. write crontab
+1. Install Systemd unit files
 
-    ```bash
-    $ sudo crontab -e
+    ```shell
+    $ sudo cp co2-zabbix.service co2-zabbix.timer /etc/systemd/system/
+    $ sudo systemctl daemon-reload
+    $ sudo systemctl enable co2-zabbix.timer
+    $ sudo systemctl start co2-zabbix.timer
+    ```
 
-    # every 1 minute
-    */1 * * * * /usr/bin/python3 /opt/co2meter/co2-zabbix.py >> /opt/co2meter/co2-zabbix.log
+    Verify
+    ```shell
+    $ systemctl list-timers
     ```
 
 1. Import zabbix template
@@ -36,6 +41,6 @@ This scripts supports Python 3.x.
 
 ## Simple use
 
-```bash
+```shell
 sudo python3 co2-terminal.py
 ```

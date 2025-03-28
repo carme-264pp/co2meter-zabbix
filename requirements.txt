@@ -1,0 +1,2 @@
+-e git+https://github.com/heinemml/CO2Meter#egg=Co2Meter
+py-zabbix == 1.1.7

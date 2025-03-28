@@ -1,0 +1,14 @@
+[Unit]
+Description=Fetch CO2 meter to zabbix server
+After=zabbix-server.service
+
+[Service]
+Type=oneshot
+User=co2meter
+Group=co2meter
+Environment="PATH=/opt/co2meter-zabbix/venv/bin"
+WorkingDirectory=/opt/co2meter-zabbix
+ExecStart=/opt/co2meter-zabbix/venv/bin/python3 co2-zabbix.py
+Restart=no
+StandardOutput=append:/opt/co2meter-zabbix/co2-zabbix.log
+StandardError=append:/opt/co2meter-zabbix/co2-zabbix.log

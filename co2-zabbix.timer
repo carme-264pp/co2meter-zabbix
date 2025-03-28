@@ -1,0 +1,9 @@
+[Unit]
+Description=Timer fetch CO2 meter to zabbix server
+
+[Timer]
+OnUnitActiveSec=60seconds
+OnBootSec=10seconds
+
+[Install]
+WantedBy=timers.target
