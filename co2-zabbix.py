@@ -3,11 +3,11 @@ import time
 from datetime import datetime
 
 from CO2Meter import *
-from pyzabbix import ZabbixMetric, ZabbixSender
+from zabbix_utils import Sender, ItemValue
 
 HOSTNAME = 'CO2 Meter'
+ZABBIX_SERVER = '127.0.0.1'
 count = 5
-AgentConfigPath = '/etc/zabbix/zabbix_agent2.conf'
 
 Meter = None
 
@@ -29,14 +29,14 @@ while count > 0:
         continue
 
     # Send data to zabbix
-    getTime = datetime.now()
-    packet = [
-        ZabbixMetric(HOSTNAME, 'co2mini.temperature', co2data['temperature'], int(getTime.timestamp())),
-        ZabbixMetric(HOSTNAME, 'co2mini.co2', co2data['co2'], int(getTime.timestamp()))
+    items = [
+        ItemValue(HOSTNAME, 'co2mini.temperature', co2data['temperature']),
+        ItemValue(HOSTNAME, 'co2mini.co2', co2data['co2'])
     ]
-    result = ZabbixSender(use_config=AgentConfigPath).send(packet)
+    sender = Sender(server=ZABBIX_SERVER, port=10051)
+    result = sender.send(items)
     #print(getTime, end=' ')
-    #print(result)
+    print(result)
     exit(0)
 
 print(getTime, end=' ')
