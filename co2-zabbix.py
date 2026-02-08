@@ -36,7 +36,7 @@ while count > 0:
     sender = Sender(server=ZABBIX_SERVER, port=10051)
     result = sender.send(items)
     #print(getTime, end=' ')
-    print(result)
+    #print(result)
     exit(0)
 
 print(getTime, end=' ')
